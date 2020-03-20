@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AForge.Video;
 using AForge.Video.DirectShow;
+using System.Data.Sql;
+using System.Data.SqlClient;
 
 namespace last_fucking_try
 {
@@ -30,6 +32,24 @@ namespace last_fucking_try
             }
             comboBox1.SelectedIndex = 0;
             videoSource = new VideoCaptureDevice();
+
+            string connectionString;
+            SqlConnection con;
+            connectionString = @"Data Source=CND8263QPP\SEKHARSQL; Initial Catalog=Db;User ID=sa;Password=KlassLyx;";
+            con = new SqlConnection(connectionString);
+            con.Open();
+
+            SqlCommand command;
+            SqlDataReader dataReader;
+            string sql, output = "";
+
+            sql = "SELECT Text FROM Db";
+            command = new SqlCommand(sql, con);
+            dataReader = command.ExecuteReader();
+
+            dataReader.Read();
+            button1.Text = "Klicka inte här annars....... får du fangelse för inträde i SÄPOs databas.....";
+            con.Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
